@@ -3,6 +3,9 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
+# ссылка на задание https://github.com/ostrovok-team/code-challenge/tree/master/python
+from requests.models import Response
+
 
 class Parser:
     SITE = "https://www.smashingmagazine.com"
@@ -15,7 +18,11 @@ class Parser:
         self.save_files(image_links)
 
     def get_url(self, url):
-        return requests.get(url)
+        try:
+            r: Response = requests.get(url)
+        except requests.exceptions.RequestException as e:
+            raise SystemExit(e)
+        return r
 
     def format_url(self, month, year):
         month = month.lower()
